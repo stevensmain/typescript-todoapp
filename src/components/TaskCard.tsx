@@ -1,6 +1,6 @@
 import { Task } from '../interfaces/type'
 import { useDispatch } from "react-redux";
-import { deleteTask, selectTask } from '../redux/slices/tasksSlice';
+import { deleteTask, markComplete, selectTask } from '../redux/slices/tasksSlice';
 
 interface props {
   task: Task;
@@ -23,7 +23,7 @@ const TaskCard = ({ task }: props) => {
               className="form-check-input"
               type="checkbox"
               defaultChecked={complete}
-              onChange={() => console.log(id)}
+              onChange={() => dispatch(markComplete(id))}
             />
             <label className="form-check-label" >
               Complete

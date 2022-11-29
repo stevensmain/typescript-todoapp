@@ -10,7 +10,7 @@ const TaskList = ({ tasks }: props) => {
         <section className='col-md-8'>
             <div className="row gap-3">
                 {tasks.map(task =>
-                    <TaskCard task={task} />
+                    <TaskCard key={task.id} task={task} />
                 )}
             </div>
         </section>

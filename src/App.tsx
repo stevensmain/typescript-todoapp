@@ -1,8 +1,7 @@
-import { useState } from 'react'
-import 'bootswatch/dist/solar/bootstrap.min.css'
-import { Task } from './interfaces/type'
 import TaskForm from './components/TaskForm'
 import TaskList from './components/TaskList'
+import { useAppSelector } from './redux/hooks'
+import 'bootswatch/dist/solar/bootstrap.min.css'
 
 interface appProps {
   title?: string
@@ -17,17 +16,7 @@ const INITIAL_TASK_SELECTED = {
 
 function App({ title = 'MyTODO' }: appProps) {
 
-  const [tasks, setTasks] = useState<Task[]>([])
-  const [taskSelected, setTaskSelected] = useState<Task>(INITIAL_TASK_SELECTED)
-
-  const selectTask = (task: Task): any => setTaskSelected(task)
-  const addANewTask = (newTask: Task): any => setTasks([newTask, ...tasks])
-  const deleteTask = (id: number): any => setTasks(prevTasks => prevTasks.filter(task => task.id !== id))
-  const handleComplete = (id: number): any => setTasks(prevTasks => prevTasks.map(task => id === task.id ? { ...task, complete: !task.complete } : task))
-  const editTask = (newTask: Task): any => {
-    setTasks(prevTasks => prevTasks.map(task => newTask.id === task.id ? newTask : task))
-    setTaskSelected(INITIAL_TASK_SELECTED)
-  }
+  const { tasks } = useAppSelector(state => state.taskReducer)
 
   return (
     <main className="bg-dark w-full" style={{ minHeight: '100vh' }}>

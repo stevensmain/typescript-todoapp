@@ -1,15 +1,13 @@
-import { ActionCreatorWithPayload, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
 import { Task } from '../../interfaces/type'
 
-// Define a type for the slice state
 export interface TaskState {
     tasks: Task[],
     selectedTask: Task | null
 }
 
-// Define the initial state using that type
 const initialState: TaskState = {
     tasks: [],
     selectedTask: null
@@ -25,6 +23,9 @@ export const tasksSlice = createSlice({
         editTask: (state, action: PayloadAction<Task>) => {
             state.tasks = state.tasks.map(task => task.id === action.payload.id ? action.payload : task)
         },
+        markComplete: (state, action: PayloadAction<number>) => {
+            state.tasks = state.tasks.map(task => task.id === action.payload ? { ...task, complete: !task.complete } : task)
+        },
         deleteTask: (state, action: PayloadAction<number>) => {
             state.tasks = state.tasks.filter(task => task.id !== action.payload)
         },
@@ -34,7 +35,7 @@ export const tasksSlice = createSlice({
     },
 })
 
-export const { addTask, editTask, selectTask, deleteTask } = tasksSlice.actions
+export const { addTask, editTask, selectTask, deleteTask, markComplete } = tasksSlice.actions
 
 export const useSelector = (state: RootState) => state.tasks
 

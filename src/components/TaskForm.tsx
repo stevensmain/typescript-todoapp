@@ -12,7 +12,7 @@ interface formData {
 const TaskForm = () => {
 
     const dispatch = useAppDispatch()
-    const { tasks, selectedTask } = useAppSelector(state => state.tasks)
+    const { tasks, selectedTask } = useAppSelector(state => state.taskReducer)
 
     const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm<formData>();
     const onSubmit = handleSubmit((data: formData) => {
