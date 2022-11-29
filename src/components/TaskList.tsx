@@ -1,24 +1,16 @@
-import { Task } from '../interfaces/Tasks'
+import { Task } from '../interfaces/type'
 import TaskCard from './TaskCard'
 
 interface props {
-    tasks: Task[],
-    selectTask: (task: Task) => void;
-    handleComplete: (id: number) => void;
-    deleteTask: (id: number) => void;
+    tasks: Task[]
 }
 
-const TaskList = ({ tasks, selectTask, handleComplete, deleteTask }: props) => {
+const TaskList = ({ tasks }: props) => {
     return (
         <section className='col-md-8'>
             <div className="row gap-3">
                 {tasks.map(task =>
-                    <TaskCard
-                        task={task}
-                        selectTask={selectTask}
-                        handleComplete={handleComplete}
-                        deleteTask={deleteTask}
-                    />
+                    <TaskCard task={task} />
                 )}
             </div>
         </section>

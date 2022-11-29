@@ -1,15 +1,15 @@
-import { Task } from '../interfaces/Tasks'
+import { Task } from '../interfaces/type'
+import { useDispatch } from "react-redux";
+import { deleteTask, selectTask } from '../redux/slices/tasksSlice';
 
 interface props {
   task: Task;
-  selectTask: (task: Task) => void;
-  handleComplete: (id: number) => void;
-  deleteTask: (id: number) => void;
 }
 
-const TaskCard = ({ task, selectTask, handleComplete, deleteTask }: props) => {
+const TaskCard = ({ task }: props) => {
 
   const { id, title, description, complete } = task
+  const dispatch = useDispatch()
 
   return (
     <div className='card rounded-2 bg-light col-md-5' key={id}>
@@ -23,7 +23,7 @@ const TaskCard = ({ task, selectTask, handleComplete, deleteTask }: props) => {
               className="form-check-input"
               type="checkbox"
               defaultChecked={complete}
-              onChange={() => handleComplete(id)}
+              onChange={() => console.log(id)}
             />
             <label className="form-check-label" >
               Complete
@@ -31,8 +31,8 @@ const TaskCard = ({ task, selectTask, handleComplete, deleteTask }: props) => {
           </div>
         </fieldset>
         <div className="d-inline-flex gap-2">
-          <button className='btn btn-info mt-4' onClick={() => selectTask(task)}>Edit</button>
-          <button className='btn btn-danger mt-4' onClick={() => deleteTask(id)}>Delete</button>
+          <button className='btn btn-info mt-4' onClick={() => dispatch(selectTask(task))}>Edit</button>
+          <button className='btn btn-danger mt-4' onClick={() => dispatch(deleteTask(id))}>Delete</button>
         </div>
       </div>
     </div>

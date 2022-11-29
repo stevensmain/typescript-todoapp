@@ -1,37 +1,35 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { Task } from '../interfaces/Tasks'
+import { useAppDispatch } from '../redux/hooks';
+import { addTask, editTask } from '../redux/slices/tasksSlice';
+import { useAppSelector } from '../redux/store';
 
 interface formData {
     title: string;
     description: string;
 }
 
-interface Props {
-    addANewTask: (task: Task) => void;
-    editTask: (task: Task) => void;
-    taskSelected: Task,
-}
+const TaskForm = () => {
 
-const TaskForm = ({ addANewTask, editTask, taskSelected }: Props) => {
+    const dispatch = useAppDispatch()
+    const { tasks, selectedTask } = useAppSelector(state => state.tasks)
 
     const { register, handleSubmit, setValue, reset, formState: { errors } } = useForm<formData>();
     const onSubmit = handleSubmit((data: formData) => {
-        if (taskSelected.id) {
-            editTask({ ...taskSelected, title: data.title, description: data.description })
+        if (selectedTask) {
+            dispatch(editTask({ ...selectedTask, title: data.title, description: data.description }))
         } else {
-            addANewTask({ ...data, id: Date.now(), complete: false })
+            dispatch(addTask({ ...data, id: Date.now(), complete: false }))
         }
         reset()
     })
 
     useEffect(() => {
-        if (taskSelected.id) {
-            setValue('title', taskSelected.title)
-            setValue('description', taskSelected.description)
+        if (selectedTask) {
+            setValue('title', selectedTask.title)
+            setValue('description', selectedTask.description)
         }
-    }, [taskSelected])
-
+    }, [selectedTask])
 
     return (
         <div className="col-md-4 rounded-2">

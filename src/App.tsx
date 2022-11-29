@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import 'bootswatch/dist/solar/bootstrap.min.css'
-import { Task } from './interfaces/Tasks'
+import { Task } from './interfaces/type'
 import TaskForm from './components/TaskForm'
 import TaskList from './components/TaskList'
 
@@ -42,17 +42,8 @@ function App({ title = 'MyTODO' }: appProps) {
       <section className="container p-4">
         <div className="row gap-3 gap-md-0">
           <h1>Create a new task</h1>
-          <TaskForm
-            addANewTask={addANewTask}
-            taskSelected={taskSelected}
-            editTask={editTask}
-            />
-          <TaskList
-            tasks={tasks}
-            selectTask={selectTask}
-            handleComplete={handleComplete}
-            deleteTask={deleteTask}
-          />
+          <TaskForm />
+          <TaskList tasks={tasks} />
         </div>
       </section>
     </main>
